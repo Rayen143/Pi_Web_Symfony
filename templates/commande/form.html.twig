@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        /* Style général du formulaire */
+        table {
+            width: 50%; /* Réduit la largeur du tableau */
+            margin: 0 auto; /* Centre le tableau */
+            border-collapse: collapse;
+        }
+
+        td {
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        /* Style des labels */
+        label {
+            font-weight: bold;
+        }
+
+        /* Style des champs de saisie */
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        /* Style du bouton */
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        /* Style des messages d'erreur */
+        .error-message {
+            color: red;
+        }
+
+        /* Style des tr */
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+    </style>
+
+    <table>
+        <tbody>
+            <tr>
+                {{ form_start(formA, {'attr': {'novalidate': 'novalidate'}}) }}
+                <td>{{ form_label(formA.tel, "Num tél") }}</td>
+                <td>{{ form_widget(formA.tel) }}</td>
+                <td>{{ form_errors(formA.tel) }}</td>
+                <td>{{ form_label(formA.ville, "ville") }}</td>
+                <td>{{ form_widget(formA.ville) }}</td>
+                <td>{{ form_errors(formA.ville) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(formA.rue, "adresse") }}</td>
+                <td>{{ form_widget(formA.rue) }}</td>
+                <td>{{ form_errors(formA.rue) }}</td>
+                <td>{{ form_label(formA.codepostal, "code postal") }}</td>
+                <td>{{ form_widget(formA.codepostal) }}</td>
+                <td>{{ form_errors(formA.codepostal) }}</td>
+            </tr>
+            <tr>
+                <td colspan="4">{{ form_widget(formA.payer_votre_commande) }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    {{ form_end(formA) }}
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<style>
+    table {
+        border-collapse: collapse;
+        width: 30%; /* Réduire la largeur du tableau */
+        margin-top: 0px; /* Centrer le tableau */
+        margin-bottom: 10px;
+        margin-left: auto; /* Centrer horizontalement */
+        margin-right: auto; /* Centrer horizontalement */
+    }
+
+    th, td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    /* Réduire la taille du texte */
+    th, td {
+        font-size: 14px;
+    }
+
+    /* Espacement entre les lignes */
+    td {
+        line-height: 1.5;
+    }
+
+    /* Padding pour le titre du tableau */
+    .table-title {
+        text-align: center;
+        padding: 10px; /* Ajuster le padding selon vos préférences */
+        margin-bottom: 10px; /* Ajouter une marge en bas pour séparer le titre du tableau */
+    }
+</style>
+
+<h3 class="table-title">Liste des Produits dans votre panier</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Produit</th>
+            <th>prix unitaire</th>
+            <th>Supprimer</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for panier in paniers %}
+        <tr>
+            <td>{{ panier.idproduit.getDes }}</td>
+            <td>{{ panier.idproduit.getPrixunitaire }}</td>
+            <td><a href="{{ path('panier_delete', {'idpanier': panier.idpanier}) }}">Delete</a></td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td>Total des prix:</td>
+            <td>{{ sommeTotale }}</td>
+            <td><a href="{{ path('commande_add',{'sommeTotale': sommeTotale}) }}" style="display: block; text-align: center;">Commander</a></td>
+        </tr>
+    </tbody>
+</table>
+
+{% endblock %}

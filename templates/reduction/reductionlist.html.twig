@@ -1,0 +1,84 @@
+{% extends 'baseadmin.html.twig' %}
+
+{% block body %}
+<style>
+/* Style du titre */
+h1 {
+  font-size: 24px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Style de la table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-family: 'Arial', sans-serif;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Style de l'en-tête de la table */
+thead {
+  background-color: #1abc9c;
+  color: white;
+}
+
+/* Style des cellules de l'en-tête */
+th {
+  padding: 15px;
+  text-align: left;
+}
+
+/* Style des lignes de la table */
+tbody tr {
+  background-color: #f9f9f9;
+}
+
+/* Style des cellules de données */
+td {
+  padding: 15px;
+}
+
+/* Style du lien 'Delete' */
+a {
+  color: #e74c3c;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+</style>
+
+<h1>Liste des Réductions</h1>
+<table>
+    <thead>
+        <tr>
+            <th>idréduction</th>
+            <th>codeproduit</th>
+            <th>remise</th>
+            <th>prix unitaire</th>
+            <th>nouveau prix</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for reduction in reductions %}
+        <tr>
+            <td>{{ reduction.idreduction }}</td>
+            <td>{{ reduction.codeproduit }}</td>
+            <td>{{ reduction.remise }}</td>
+            <td>{{ reduction.prixunitaire }}</td>
+            <td>{{ reduction.nouveauprix }}</td>
+            <td>
+                <a href="{{ path('reduction_delete', {'idreduction': reduction.idreduction}) }}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

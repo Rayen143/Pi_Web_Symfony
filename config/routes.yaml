@@ -1,0 +1,43 @@
+commande_show:
+    path: /commande/show
+    controller: App\Controller\CommandeController::show
+
+
+commande_add:
+    path: /commande/form/{sommeTotale}
+    controller: App\Controller\CommandeController::createCommande
+
+commande_delete:
+    path: /commande/delete/{idcommande}
+    controller: App\Controller\CommandeController::deleteCommande
+
+
+
+panier_show:
+    path: /panier/show
+    controller: App\Controller\PanierController::show
+panier_delete:
+    path: /panier/delete/{idpanier}
+    controller: App\Controller\PanierController::deletePanier
+
+
+reduction_show:
+    path: /reduction/show
+    controller: App\Controller\ReductionController::show
+reduction_add:
+    path: /reduction/form
+    controller: App\Controller\ReductionController::AddReduction
+reduction_delete:
+    path: /reduction/delete/{idreduction}
+    controller: App\Controller\ReductionController::deleteReduction
+
+
+
+app_pay:
+    path: /pay
+    controller: App\Controller\PayementController::pay
+
+app_paymentConfirmation:
+    path: /paymentConfirmation
+    controller: App\Controller\PayementController::paymentConfirmation
+
