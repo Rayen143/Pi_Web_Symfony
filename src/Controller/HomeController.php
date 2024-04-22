@@ -16,20 +16,11 @@ class HomeController extends AbstractController
     {
         
         
-        return $this->render('admin/bars.html.twig'
+        return $this->render('baseadmin.html.twig'
         );
     }
     
-/*
-    #[Route('/', name: 'UserDashboard2')]
-    public function userDashboardd(UserRepository $userRepository): Response
-    {
-    
 
-        // Render the template, passing the user entity
-        return $this->render('user/UserDashboard.html.twig');
-    }
-*/
     
     #[Route('/user/UserDashboard/{id}', name: 'UserDashboard')]
     public function userDashboard(UserRepository $userRepository, $id): Response
@@ -38,7 +29,7 @@ class HomeController extends AbstractController
         $user = $userRepository->find($id);
 
         // Render the template, passing the user entity
-        return $this->render('user/UserDashboard.html.twig', [
+        return $this->render('base.html.twig', [
             'user' => $user,
         ]);
     }

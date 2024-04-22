@@ -20,6 +20,11 @@ use App\Controller\TwiliosmsController;
 use Dompdf\Dompdf;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+
 
 class UserController extends AbstractController
 {
@@ -77,8 +82,7 @@ public function register(
             $user->setImage($imageName);
         }
 
-        // Set user roles
-        
+      
 
         // Persist the user to the database
         $entityManager = $this->getDoctrine()->getManager();
@@ -94,16 +98,12 @@ public function register(
          
 
 
-           // Get telephone number from the form
-          $tel = '+216' . $form->get('tel')->getData();
-           $user->setTel($tel);
-
             try {
                 // Send SMS to the registered user
-                $toNumber = $user->getTel();
+                $toNumber = '+21628013823';
                 $fromNumber = '+19048530285';
         
-                $message = $twilioClient->messages->create(
+                $message = $this->twilioClient->messages->create(
                     $toNumber,
                     [
                         'from' => $fromNumber,
@@ -133,44 +133,41 @@ public function register(
 
 
 
-    #[Route('/users', name: 'user_list')]
-    public function userList(Request $request, UserRepository $userRepository): Response
-    {
-        // Get the sort option from the request query parameters
-        $sortBy = $request->query->get('sort');
-        
-        // If sorting by email is requested, fetch users sorted by email
-        if ($sortBy === 'email') {
-            $users = $userRepository->findAllSortedByEmail();
-        } else {
-            // Otherwise, fetch all users
-            $users = $userRepository->findAll();
-        }
-        
-        // Render the template and pass the users to it
-        return $this->render('user/user_list.html.twig', [
-            'users' => $users,
-        ]);
-    }
+    
     
 
 
 
 
-/*
     #[Route('/users', name: 'user_list')]
-    public function userList(): Response
+    public function userList(Request $request, UserRepository $userRepository): Response
     {
-        // Fetch all users from the database
-        $userRepository = $this->managerRegistry->getRepository(User::class);
-        $users = $userRepository->findAll();
+       // Get the sort option from the request query parameters
+    $sortBy = $request->query->get('sort');
+    
+    // Get the search term from the request query parameters
+    $searchTerm = $request->query->get('search');
 
-        // Render the template and pass the users to it
-        return $this->render('user/user_list.html.twig', [
-            'users' => $users,
-        ]);
+    // If sorting by email is requested, fetch users sorted by email
+    if ($sortBy === 'email') {
+        $users = $userRepository->findAllSortedByEmail();
+    } else {
+        // Otherwise, fetch all users
+        $users = $userRepository->findAll();
     }
-*/
+
+    // If a search term is provided, filter users by name
+    if ($searchTerm) {
+        $users = $userRepository->searchByEmail($searchTerm);
+    }
+    
+    // Render the template and pass the users to it
+    return $this->render('user/user_list.html.twig', [
+        'users' => $users,
+    ]);
+    }
+
+    
 
 
 
@@ -331,7 +328,7 @@ public function updateUser(Request $request, int $id): Response
         return $this->redirectToRoute('UserDashboard', ['id' => $user->getId()]);
     }
 
-    return $this->render('user/user_Card.html.twig', [
+    return $this->render('user/user_card.html.twig', [
         'user' => $user,
         'registration_form' => $form->createView(),
     ]);
@@ -410,6 +407,9 @@ public function updateUser(Request $request, int $id): Response
                 'Content-Disposition' => 'attachment; filename="' . $filename . '"'
             ]
         );
+        
+
+        
     }
 
 

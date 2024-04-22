@@ -42,7 +42,15 @@ class UserRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-
+    public function searchByEmail2(string $email): ?User
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.email = :email')
+            ->setParameter('email', $email)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+    
 
 
 // Tri Email 

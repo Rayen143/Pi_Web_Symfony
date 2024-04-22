@@ -64,10 +64,15 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
         $user = $token->getUser();
         $roles = $user->getRoles();
         
-        if (in_array("ROLE_ADMIN", $roles, true)) {
+        if (in_array("Admin", $roles, true)) {
             // Return a redirect response for admin
             return new RedirectResponse($this->urlGenerator->generate('adminDashboard'));
-        } elseif (in_array("ROLE_USER", $roles, true)) {
+        } elseif (in_array("Artiste", $roles, true)) {
+            // Return a redirect response for user dashboard
+            // Assuming 'UserDashboard' requires the user ID as a route parameter
+            return new RedirectResponse($this->urlGenerator->generate('UserDashboard', ['id' => $user->getId()]));
+        }
+        elseif (in_array("simple_utilisateur", $roles, true)) {
             // Return a redirect response for user dashboard
             // Assuming 'UserDashboard' requires the user ID as a route parameter
             return new RedirectResponse($this->urlGenerator->generate('UserDashboard', ['id' => $user->getId()]));
