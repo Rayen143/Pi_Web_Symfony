@@ -1,0 +1,49 @@
+{# templates/user/updateAdmin.html.twig #}
+
+{% extends 'adminbase.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="card-title text-center mb-4">Register</h1>
+                        {{ form_start(registration_form) }}
+                            <div class="mb-3">
+                                {{ form_label(registration_form.nom, 'Nom', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(registration_form.nom, {'attr': {'class': 'form-control', 'placeholder': 'Entrez votre nom'}}) }}
+                            </div>
+                            <div class="mb-3">
+                                {{ form_label(registration_form.prenom, 'Prénom', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(registration_form.prenom, {'attr': {'class': 'form-control', 'placeholder': 'Entrez votre prénom'}}) }}
+                            </div>
+                            <div class="mb-3">
+                                {{ form_label(registration_form.role, 'Rôle', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(registration_form.role, {'attr': {'class': 'form-control', 'placeholder': 'Entrez votre rôle'}}) }}
+                            </div>
+                            <div class="mb-3">
+                                {{ form_label(registration_form.mdp, 'Mot de passe', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(registration_form.mdp, {'attr': {'class': 'form-control', 'placeholder': 'Entrez votre mot de passe'}}) }}
+                            </div>
+                            <div class="mb-3">
+                                {{ form_label(registration_form.tel, 'Numéro de téléphone', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(registration_form.tel, {'attr': {'class': 'form-control', 'placeholder': 'Entrez votre numéro de téléphone'}}) }}
+                            </div>
+                            <div class="mb-3">
+                                {{ form_label(registration_form.image, 'Photo de profil', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(registration_form.image, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        {{ form_end(registration_form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

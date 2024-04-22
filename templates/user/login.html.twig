@@ -1,0 +1,91 @@
+{# user/login.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .login-container {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-card .card-body {
+            padding: 40px;
+        }
+
+        .logo {
+            width: 150px;
+            margin: 0 auto 30px;
+        }
+
+        .form-control {
+            border-radius: 20px;
+            padding: 15px;
+        }
+
+        .btn-primary {
+            border-radius: 20px;
+            padding: 15px;
+            font-weight: bold;
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="login-container">
+    <div class="login-card">
+        <div class="card-body">
+            <div class="text-center mb-4">
+                <img src="{{ asset('logooo.png') }}" alt="Your Logo" class="logo">
+            </div>
+            <h1 class="card-title text-center mb-4">
+                Login
+            </h1>
+
+            <form method="post">
+                {{ form_start(form) }}
+                <div class="mb-3">
+                    {{ form_label(form.email, null, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Enter your email'}}) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(form.mdp, null, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.mdp, {'attr': {'class': 'form-control', 'placeholder': 'Enter your password'}}) }}
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                </div>
+                {{ form_end(form) }}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
