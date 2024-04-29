@@ -4,7 +4,7 @@
 # config/routes.yaml
 
 registration_success:
-    path: '/users'
+    path: '/admin/users'
     controller: App\Controller\UserController
 
 
@@ -21,9 +21,20 @@ update_user:
 # routes.yaml
 
 delete_user:
-    path: '/user/{id}/delete'
+    path: '/admin/user/{id}/delete'
     controller: App\Controller\UserController::delete
     methods: ['GET', 'POST']
+
+
+# routes.yaml
+
+delete_user1:
+    path: /user/user/{id}/delete1
+    controller: App\Controller\UserController::delete1
+    methods: ['GET', 'POST']
+
+   
+
 
 
 reactivate_user:
