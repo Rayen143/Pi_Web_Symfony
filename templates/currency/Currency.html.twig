@@ -1,0 +1,22 @@
+<script>
+document.getElementById('currency').addEventListener('change', function() {
+    var currency = this.value;
+
+    // Send AJAX request to update currency
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '{{ path('ajax_currency_change') }}', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var response = JSON.parse(xhr.responseText);
+            if (response.success) {
+                // Currency updated successfully
+                // Add code here to handle any UI updates or feedback
+            } else {
+                // Handle error
+            }
+        }
+    };
+    xhr.send('currency=' + encodeURIComponent(currency));
+});
+</script>

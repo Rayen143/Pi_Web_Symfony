@@ -1,0 +1,36 @@
+commande_show:
+    path: /commande/show
+    controller: App\Controller\CommandeController::show
+
+
+commande_add:
+    path: /commande/form
+    controller: App\Controller\CommandeController::createCommande
+
+commande_delete:
+    path: /commande/delete/{idcommande}
+    controller: App\Controller\CommandeController::deleteCommande
+
+
+
+panier_show:
+    path: /panier/show
+    controller: App\Controller\PanierController::show
+panier_delete:
+    path: /panier/delete/{idpanier }
+    controller: App\Controller\PanierController::deletePanier
+
+
+save_content_route:
+    path: /save-content
+    controller: App\Controller\YourController::saveContentAction
+    methods: ['POST']
+
+export_csv:
+    path: /export-csv
+    controller: App\Controller\ProdController::exportCsv
+
+ajax_currency_change:
+    path: /ajax/currency/change
+    controller: App\Controller\CurrencyController::changeCurrency
+

@@ -1,0 +1,31 @@
+{% extends 'baseadmin.html.twig' %}
+
+{% block body %}
+
+<h1>Product Category Statistic</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Product ID</th>
+            <th>Product Name</th>
+            <th>Number of Categories</th>
+        </tr>
+    </thead>
+    <tbody>
+{% for productId, categoryCount in productCategoryCounts %}
+    <tr>
+        <td>{{ productId }}</td>
+        {% if produits[productId] is defined %}
+            <td>{{ produits[productId].des }}</td>
+        {% else %}
+            <td>N/A</td> <!-- or any default value you want to display if the product with this ID doesn't exist -->
+        {% endif %}
+        <td>{{ categoryCount }}</td>
+    </tr>
+{% endfor %}
+
+    </tbody>
+</table>
+
+{% endblock %}

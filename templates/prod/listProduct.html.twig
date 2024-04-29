@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cart View{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="text-center">Our Products</h1>
+    <div id="google_translate_element"></div>
+
+            <script type="text/javascript">
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+                }
+            </script>
+
+            <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <!-- Search form -->
+    <form method="get" action="{{ path('product_list') }}">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Search" aria-label="Search" name="q">
+            <button class="btn btn-outline-secondary" type="submit">Search</button>
+        </div>
+    </form>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for product in products %}
+        <div class="col">
+            <div class="card h-100">
+            {% if product.image %}
+            <img class="img-fluid w-100" src="{{ asset('uploads/images/' ~ product.image) }}" alt="">
+                                        {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.des }}</h5>
+                    <p class="card-text">Price: {{ product.prixunitaire }}</p>
+                    <p class="card-text">Quantity: {{ product.qtestock }}</p>
+                    <a href="{{ path('product_details', {'idProduit': product.idProduit}) }}" class="btn btn-primary">Ajouter</a>
+                    <form action="{{ path('app_panier', {'id': product.idProduit}) }}" method="post">
+                        <!-- Add your form fields and submit button here if needed -->
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {{ knp_pagination_render(products) }}
+</div>
+{% endblock %}

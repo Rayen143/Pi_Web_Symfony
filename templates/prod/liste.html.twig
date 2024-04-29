@@ -1,0 +1,141 @@
+{% extends 'baseadmin.html.twig' %}
+
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('path/to/styli.css') }}">
+{% endblock %}
+
+{% block body %}
+    <h1>Liste des Produits</h1>
+    
+    <!-- Currency selection form -->
+    <form id="currencyForm">
+        <label for="currency">Change Currency:</label>
+        <select name="currency" id="currency">
+            <option value="TND">TND (Tunisian Dinar)</option>
+            <option value="USD">USD (US Dollar)</option>
+            <option value="Euro">Euro</option>
+            <option value="Yen">Yen</option>
+        </select>
+    </form>
+
+    <!-- Google Translate element -->
+    <div id="google_translate_element"></div>
+
+    <!-- Search form -->
+    <input type="text" id="searchInput" placeholder="Search by status..." onkeyup="searchForms()">
+
+    <!-- Table to display product data -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Code Produit</th>
+                <th>Description</th>
+                <th>Unité</th>
+                <th>Catégorie</th>
+                <th>Image</th>
+                <th>Quantité Minimum</th>
+                <th>Quantité en Stock</th>
+                <th>Prix Unitaire</th>
+                <th>Actions</th> <!-- Added Actions column -->
+            </tr>
+        </thead>
+        <tbody id="formTableBody">
+            {% for prod in produits %}
+            <tr>
+                <td>{{ prod.codeproduit }}</td>
+                <td>{{ prod.des }}</td>
+                <td>{{ prod.idunite }}</td>
+                <td>{{ prod.cat }}</td>
+                <td>{{ prod.image }}</td>
+                <td>{{ prod.qtemin }}</td>
+                <td>{{ prod.qtestock }}</td>
+                <td class="prixUnitaire" data-original-price-tnd="{{ prod.prixunitaire }}">{{ prod.prixunitaire }}</td>
+                <td>
+                    <!-- Added links for product_edit and product_delete -->
+                    <a href="{{ path('product_edit', {'idProduit': prod.idProduit}) }}">edit</a>
+                    &nbsp; <!-- Add a space character -->
+                    <a href="{{ path('product_delete', {'idProduit': prod.idProduit}) }}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Button for exporting table data to CSV -->
+    <button id="exportCSV">Export to CSV</button>
+
+    <!-- JavaScript code for currency change and CSV export -->
+    <script>
+        document.getElementById('currency').addEventListener('change', function() {
+            var currency = this.value;
+            var prixUnitaireCells = document.querySelectorAll('.prixUnitaire');
+
+            prixUnitaireCells.forEach(function(cell) {
+                var originalPriceTND = parseFloat(cell.dataset.originalPriceTnd);
+                if (!isNaN(originalPriceTND)) {
+                    var convertedPrice;
+                    switch (currency) {
+                        case 'TND':
+                            convertedPrice = originalPriceTND;
+                            break;
+                        case 'USD':
+                            convertedPrice = originalPriceTND * 0.36;
+                            break;
+                        case 'Euro':
+                            convertedPrice = originalPriceTND * 0.30;
+                            break;
+                        case 'Yen':
+                            convertedPrice = originalPriceTND * 40.36;
+                            break;
+                        default:
+                            convertedPrice = originalPriceTND;
+                    }
+                    cell.textContent = convertedPrice.toFixed(2) + ' ' + currency;
+                }
+            });
+        }
+        );
+
+      
+
+    // Function to export table data to CSV
+        document.getElementById('exportCSV').addEventListener('click', function() {
+            // Get table data
+            var table = document.querySelector('.table');
+            var rows = table.querySelectorAll('tr');
+            var csv = [];
+
+            // Extract table data row by row
+            rows.forEach(function(row) {
+                var rowData = [];
+                row.querySelectorAll('td').forEach(function(cell) {
+                    rowData.push(cell.textContent.trim());
+                });
+                csv.push(rowData.join(','));
+            });
+
+            // Generate CSV content
+            var csvContent = 'data:text/csv;charset=utf-8,' + csv.join('\n');
+
+            // Create download link and trigger click
+            var encodedUri = encodeURI(csvContent);
+            var link = document.createElement('a');
+            link.setAttribute('href', encodedUri);
+            link.setAttribute('download', 'products.csv');
+            document.body.appendChild(link);
+            link.click();
+        });
+    </script>
+
+    <!-- Google Translate script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <!-- Button for product category statistic -->
+    <a href="{{ path('chart') }}">View Product Category Statistic</a>
+
+{% endblock %}

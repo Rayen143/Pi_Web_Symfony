@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+<h1>Liste des Produits</h1>
+<table>
+    <thead>
+        <tr>
+            <th>idpanier</th>
+            <th>iduser</th>
+            <th>idproduit</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for panier in paniers %}
+        <tr>
+            <td>{{ panier.idpanier }}</td>
+            <td>{{ panier.iduser.getId }}</td>
+            <td>{{ panier.idproduit.getIdProduit }}</td>
+            <td>
+                <a href="{{ path('panier_delete', {'idpanier': panier.idpanier}) }}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

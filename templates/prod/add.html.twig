@@ -1,0 +1,103 @@
+{% extends 'baseadmin.html.twig' %}
+
+{% block title %}Ajouter un produit{% endblock %}
+
+{% block body %}
+    <style>
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .form-control-file {
+            width: 100%;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+
+        /* Additional custom styles */
+        /* Add your custom styles here */
+    </style>
+
+    <h1>Ajouter un produit</h1>
+
+    {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
+
+    <div class="form-group">
+        {{ form_label(form.codeproduit, 'Code Produit') }}
+        {{ form_widget(form.codeproduit, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.codeproduit) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.des, 'Description') }}
+        {{ form_widget(form.des, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.des) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.idunite, 'Unité') }}
+        {{ form_widget(form.idunite, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.idunite) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.cat, 'Catégorie') }}
+        {{ form_widget(form.cat, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.cat) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.image, 'Image', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.image, {'attr': {'class': 'form-control-file'}}) }}
+        {{ form_errors(form.image) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.qtemin, 'Quantité Minimum') }}
+        {{ form_widget(form.qtemin, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.qtemin) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.qtestock, 'Quantité en Stock') }}
+        {{ form_widget(form.qtestock, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.qtestock) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.prixunitaire, 'Prix Unitaire') }}
+        {{ form_widget(form.prixunitaire, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.prixunitaire) }}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Ajouter</button>
+    {{ form_end(form) }} 
+{% endblock %}

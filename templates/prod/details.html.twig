@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Product Details{% endblock %}
+
+{% block body %}
+    <h1>{{ product.des }}</h1>
+    <p>Prix: {{ product.prixunitaire }}</p>
+    <p>Quantité en Stock: {{ product.qtestock }}</p>
+    <form method="post" action="{{ path('product_details', {'idProduit': product.idProduit}) }}">
+        <button type="submit">Ajouter au panier</button>
+    </form>
+{% endblock %}

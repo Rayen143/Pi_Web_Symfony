@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<h1>Liste des commandes</h1>
+<table>
+    <thead>
+        <tr>
+            <th>idcommande</th>
+            <th>iduser</th>
+            <th>idpanier</th>
+            <th>prix</th>
+            <th>tel</th>
+            <th>datecommande</th>
+            <th>codepostal</th>
+            <th>rue</th>
+            <th>ville</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for commande in commandes %}
+        <tr>
+            <td>{{ commande.idcommande }}</td>
+            <td>{{ commande.iduser.getId }}</td>
+            <td>{{ commande.idpanier.getIdpanier }}</td>
+            <td>{{ commande.prix }}</td>
+            <td>{{ commande.tel }}</td>
+            <td>{{ commande.datecommande }}</td>
+            <td>{{ commande.codepostal }}</td>
+            <td>{{ commande.rue }}</td>
+            <td>{{ commande.ville }}</td>
+                        <td>
+                <a href="{{ path('commande_delete', {'idcommande': commande.idcommande}) }}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

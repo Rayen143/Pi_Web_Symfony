@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<h1>Liste des Categories</h1>
+<table>
+    <thead>
+        <tr>
+            <th>libcategorie</th>
+       
+            
+        </tr>
+    </thead>
+    <tbody>
+        {% for categorie in categories %}
+        <tr>
+            <td>{{ categorie.libcategorie }}</td>
+          
+                        <td>
+                        <a href="{{ path('categorie_edit', {'idcategorie': categorie.idcategorie}) }}">edit</a>
+  &nbsp; <!-- Add a space character -->
+<a href="{{ path('categorie_delete', {'idcategorie': categorie.idcategorie}) }}">Delete</a>
+               
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

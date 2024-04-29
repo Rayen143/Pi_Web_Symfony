@@ -1,0 +1,17 @@
+{# templates/categorie/ajouter.html.twig #}
+
+{% extends 'baseadmin.html.twig' %}
+
+{% block title %}Ajouter une catégorie{% endblock %}
+
+{% block body %}
+    <h1>Ajouter une catégorie</h1>
+
+    {{ form_start(form) }}
+     <div class="form-group">
+        {{ form_label(form.libcategorie, 'Nom Catégorie') }}
+        {{ form_widget(form.libcategorie, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <button type="submit" class="btn btn-primary">Update</button>
+    {{ form_end(form) }}
+{% endblock %}
