@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}QR Code for Event{{ event.title }}{% endblock %}
+
+{% block body %}
+    <h1>QR Code for Event "{{ event.title }}"</h1>
+    <img src="data:image/png;base64,{{ qrCodeImage }}" alt="QR Code for Event">
+{% endblock %}

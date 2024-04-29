@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Event{% endblock %}
+
+{% block body %}
+    <h1>Event</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>EventId</th>
+                <td>{{ event.eventId }}</td>
+            </tr>
+            <tr>
+                <th>Ticketcount</th>
+                <td>{{ event.ticketcount }}</td>
+            </tr>
+            <tr>
+                <th>HostId</th>
+                <td>{{ event.hostId }}</td>
+            </tr>
+            <tr>
+                <th>LocationId</th>
+                <td>{{ event.locationId }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ event.title }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ event.type }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ event.description }}</td>
+            </tr>
+            <tr>
+                <th>Affiche</th>
+                <td>{{ event.affiche }}</td>
+            </tr>
+            <tr>
+                <th>Ticketprice</th>
+                <td>{{ event.ticketprice }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_event_index') }}">back to list</a>
+
+    <a href="{{ path('app_event_edit', {'eventId': event.eventId}) }}">edit</a>
+
+    {{ include('event/_delete_form.html.twig') }}
+    
+{% endblock %}

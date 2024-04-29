@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Event index{% endblock %}
+
+{% block body %}
+  <h1>liste event</h1>
+
+  <form action="{{ path('app_event_index') }}" method="get">
+    <input type="text" name="search" placeholder="Rechercher un événement" value="{{ searchTerm ?? '' }}">
+    <button type="submit">Rechercher</button> </form>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>EventId</th>
+        <th>Ticketcount</th>
+        <th>HostId</th>
+        <th>LocationId</th>
+        <th>Title</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Affiche</th>
+        <th>Ticketprice</th>
+        <th>actions</th>
+        <th>actions</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      {% for event in events %}
+        <tr>
+          <td>{{ event.eventId }}</td>
+          <td>{{ event.ticketcount }}</td>
+          <td>{{ event.hostId }}</td>
+          <td>{{ event.locationId }}</td>
+          <td>{{ event.title }}</td>
+          <td>{{ event.type }}</td>
+          <td>{{ event.description }}</td>
+          <td>{{ event.affiche }}</td>
+          <td>{{ event.ticketprice }}</td>
+          <td>
+            <a href="{{ path('app_event_show', {'eventId': event.eventId}) }}">show</a>
+            <a href="{{ path('app_event_edit', {'eventId': event.eventId}) }}">edit</a>
+          </td>
+          <td>
+            <a href="{{ path('app_event_show', {'eventId': event.eventId}) }}">reserver</a>
+          </td>
+        </tr>
+      {% else %}
+        <tr>
+          <td colspan="10">no records found</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <a href="{{ path('app_event_new') }}">ajouter evenement</a>
+{% endblock %}
