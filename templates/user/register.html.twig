@@ -1,9 +1,6 @@
-{% extends "base.html.twig" %}
-
 {% block title %}Register{% endblock %}
 
 {% block stylesheets %}
-    {{ parent() }}
     <style>
         /* Custom CSS for register form */
         .card {
@@ -13,14 +10,20 @@
             margin-bottom: 20px;
         }
 
-        .card-body {
-            padding-left: 30px;
-            padding-right: 30px;
-            padding-bottom: 10px;
+        .card-header {
+            background-color: #007bff;
+            border-radius: 10px 10px 0 0;
+            color: #fff;
         }
 
         .card-title {
             font-size: 24px;
+            margin-top: 10px;
+            margin-bottom: 0;
+        }
+
+        .card-body {
+            padding: 30px;
         }
 
         .form-group {
@@ -32,7 +35,22 @@
             border: none;
             border-radius: 0;
             border-bottom: 1px solid #ced4da; /* Add bottom border for separation */
-            padding-left: 30px; /* Adjust padding for icon */
+            box-shadow: none; /* Remove default input box-shadow */
+        }
+
+        /* Style submit button */
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
         }
     </style>
 {% endblock %}
@@ -69,13 +87,14 @@
                         {{ form_row(registration_form.prenom, {'attr': {'class': 'form-control', 'placeholder': 'Prenom'}}) }}
                     </div>
                     <div class="form-group">
-                        {{ form_row(registration_form.role, {'attr': {'class': 'form-control', 'placeholder': 'Role'}}) }}
-                    </div>
-                    <div class="form-group">
                         {{ form_row(registration_form.email, {'attr': {'class': 'form-control', 'placeholder': 'Email'}}) }}
                     </div>
                     <div class="form-group">
                         {{ form_row(registration_form.mdp, {'attr': {'class': 'form-control', 'placeholder': 'Password'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(registration_form.roles) }}
+                        {{ form_widget(registration_form.roles) }}
                     </div>
                     <div class="form-group">
                         {{ form_row(registration_form.tel, {'attr': {'class': 'form-control', 'placeholder': 'Phone Number'}}) }}

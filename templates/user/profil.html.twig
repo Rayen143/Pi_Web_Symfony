@@ -1,6 +1,6 @@
 {# templates/user/profile.html.twig #}
 
-{% extends 'base.html.twig' %}
+{% extends 'baseadmin.html.twig' %}
 
 {% block title %}User Profile{% endblock %}
 
@@ -29,7 +29,7 @@
                                 <li class="list-group-item"><strong>Prénom:</strong> {{ user.prenom }}</li>
                                 <li class="list-group-item"><strong>Email:</strong> {{ user.email }}</li>
                                 <li class="list-group-item"><strong>Téléphone:</strong> {{ user.tel }}</li>
-                                <li class="list-group-item"><strong>Role:</strong> {{ user.role }}</li>
+                                
                             </ul>
                         </div>
                     </div>

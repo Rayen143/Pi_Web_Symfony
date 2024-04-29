@@ -4,6 +4,7 @@
     <title>User List PDF</title>
 </head>
 <body>
+
     <h1>User List</h1>
     <table border="1">
         <thead>
@@ -11,7 +12,6 @@
                 <th>Nom</th>
                 <th>Prenom</th>
                 <th>Email</th>
-                <th>Role</th>
                 <th>Telephone</th>
                 
             </tr>
@@ -22,12 +22,12 @@
                     <td>{{ user.nom }}</td>
                     <td>{{ user.prenom}}</td>
                     <td>{{ user.email }}</td>
-                    <td>{{ user.role }}</td>
                     <td>{{ user.tel }}</td>
                     
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+    
 </body>
 </html>

@@ -1,4 +1,4 @@
-{% block title %}Verification Code{% endblock %}
+{% block title %}Change Password{% endblock %}
 
 {% block body %}
 <!DOCTYPE html>
@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verification Code</title>
+    <title>Change Password</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
@@ -33,13 +33,13 @@
         .form-group {
             margin-bottom: 20px;
         }
-        .btn-verify {
-            background-color: #ee568e;
-            border-color: #ee568e;
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
         }
-        .btn-verify:hover {
-            background-color: #e34678;
-            border-color: #e34678;
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
         }
     </style>
 </head>
@@ -48,17 +48,22 @@
         <div class="card">
             <div class="card-body">
                 <img src="{{ asset('img/logo.png') }}" alt="Logo" class="card-img-top mb-4">
-                <h1 class="text-center mb-4">Verification Code</h1>
+                <h2 class="text-center mb-4">Change Password</h2>
 
                 {{ form_start(form) }}
 
                 <div class="form-group">
-                    {{ form_label(form.code, 'Code') }}
-                    {{ form_widget(form.code, {'attr': {'class': 'form-control'}}) }}
+                    <label for="pass1" class="sr-only">New Password</label>
+                    {{ form_widget(form.pass1, {'attr': {'class': 'form-control', 'placeholder': 'New Password', 'id': 'pass1'}}) }}
                 </div>
 
-                <div class="text-center">
-                    <button type="submit" class="btn btn-outline-secondary btn-verify">Verify</button>
+                <div class="form-group">
+                    <label for="pass2" class="sr-only">Confirm New Password</label>
+                    {{ form_widget(form.pass2, {'attr': {'class': 'form-control', 'placeholder': 'Confirm New Password', 'id': 'pass2'}}) }}
+                </div>
+
+                <div class="text-center mt-3">
+                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
                 </div>
 
                 {{ form_end(form) }}
