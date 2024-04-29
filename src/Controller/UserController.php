@@ -22,7 +22,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 
@@ -52,7 +52,8 @@ public function register(
     Request $request,
     UserRepository $userRepository,
     LoggerInterface $logger,
-    FlashBagInterface $flashBag
+    FlashBagInterface $flashBag,
+    UserPasswordHasherInterface $passwordHasher
 ): Response {
     $user = new User();
     $form = $this->createForm(RegisterUserType::class, $user);
@@ -82,7 +83,9 @@ public function register(
             $user->setImage($imageName);
         }
 
-      
+      // Set user roles
+      $roles = ['ROLE_USER'];
+      $user->setRoles($roles);
 
         // Persist the user to the database
         $entityManager = $this->getDoctrine()->getManager();
@@ -92,10 +95,9 @@ public function register(
 
             $nom =  $form->get('nom')->getData();
             $prenom =  $form->get('prenom')->getData();
-            $role =  $form->get('role')->getData();
             $email = $form->get('email')->getData();
             $mdp =  $form->get('mdp')->getData();
-         
+            
 
 
             try {
@@ -126,7 +128,7 @@ public function register(
     }
 
 
-
+    
 
 
 
@@ -139,9 +141,11 @@ public function register(
 
 
 
-    #[Route('/users', name: 'user_list')]
-    public function userList(Request $request, UserRepository $userRepository): Response
+    #[Route('/admin/users', name: 'user_list')]
+    public function userList(Request $request,PaginatorInterface $paginator, UserRepository $userRepository): Response
     {
+
+        
        // Get the sort option from the request query parameters
     $sortBy = $request->query->get('sort');
     
@@ -160,13 +164,28 @@ public function register(
     if ($searchTerm) {
         $users = $userRepository->searchByEmail($searchTerm);
     }
+    $query = $userRepository->createQueryBuilder('o')
+        ->getQuery();
+        $users = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1), // Get the page number from the request, default to 1
+            5 // Number of items per page
+        );
     
     // Render the template and pass the users to it
-    return $this->render('user/user_list.html.twig', [
+    return $this->render('admin/user_list.html.twig', [
         'users' => $users,
     ]);
     }
 
+
+    #[Route('/', name: 'app_admin')]
+    public function index(): Response
+    {
+        return $this->render('acc.html.twig', [
+            'controller_name' => 'UserController',
+        ]);
+    }
     
 
 
@@ -192,10 +211,10 @@ public function register(
 
             $this->addFlash('success', 'User updated successfully.');
 
-            return $this->redirectToRoute('UserDashboard');
+            return $this->redirectToRoute('UserDashboard', ['id' => $user->getId()]);;
         }
 
-        return $this->render('user/update.html.twig', [
+        return $this->render('user/user_Card.html.twig', [
             'user' => $user,
             'registration_form' => $form->createView(),
         ]);
@@ -225,10 +244,10 @@ public function register(
 
             $this->addFlash('success', 'User updated successfully.');
 
-            return $this->redirectToRoute('adminDashboard');
+            return $this->redirectToRoute('UserDashboard', ['id' => $user->getId()]);
         }
 
-        return $this->render('user/updateAdmin.html.twig', [
+        return $this->render('user/user_Card.html.twig', [
             'user' => $user,
             'registration_form' => $form->createView(),
         ]);
@@ -243,7 +262,7 @@ public function register(
 
   
 
-    #[Route('/user/{id}/delete', name: 'delete_user', methods: ['POST'])]
+    #[Route('/admin/user/{id}/delete', name: 'delete_user', methods: ['POST'])]
     public function delete(Request $request, int $id): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
@@ -257,7 +276,26 @@ public function register(
                 $this->addFlash('success', 'User deleted successfully.');
            
     
-        return $this->redirectToRoute('userss');
+        return $this->redirectToRoute('user_list');
+    }
+
+   
+   
+    #[Route('/user/{id}/delete1', name: 'delete_user1', methods: ['POST'])]
+    public function delete1(Request $request, int $id): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $userRepository = $this->getDoctrine()->getRepository(User::class);
+    
+        $user = $userRepository->find($id);
+       
+                $entityManager->remove($user);
+                $entityManager->flush();
+    
+                $this->addFlash('success', 'User deleted successfully.');
+           
+    
+        return $this->redirectToRoute('login');
     }
 
 
@@ -287,7 +325,7 @@ public function sortByEmail(UserRepository $userRepository): Response
 
 
 // User Interface Update have ban button
-#[Route('/user/{id}/updateUser', name: 'User_Upda')]
+#[Route('/admin/user/{id}/updateUser', name: 'User_Upda')]
 public function updateUser(Request $request, int $id): Response
 {
     $entityManager = $this->getDoctrine()->getManager();
@@ -328,11 +366,13 @@ public function updateUser(Request $request, int $id): Response
         return $this->redirectToRoute('UserDashboard', ['id' => $user->getId()]);
     }
 
-    return $this->render('user/user_card.html.twig', [
+    return $this->render('user/profil.html.twig', [
         'user' => $user,
         'registration_form' => $form->createView(),
     ]);
 }
+
+
 
 
 
@@ -362,7 +402,7 @@ public function updateUser(Request $request, int $id): Response
               $users = $userRepository->findAll();
           }
 
-        return $this->render('/user/usertest.html.twig', ['users' => $users]);
+        return $this->render('/user/baase.html.twig', ['users' => $users]);
     }
 
 

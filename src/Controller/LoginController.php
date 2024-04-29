@@ -48,66 +48,6 @@ class LoginController extends AbstractController
 
 
 
-
-   /*
-    #[Route('/loginnn', name: 'app_login', methods: ['GET', 'POST'])]
-    public function login(Request $request, SessionInterface $session)
-{
-    
-       
-    // Création du formulaire
-    $form = $this->createForm(LoginType::class);
-    
-    // Gestion de la soumission du formulaire
-    $form->handleRequest($request);
-    if ($form->isSubmitted() && $form->isValid()) {
-        // Récupération des données du formulaire
-        $formData = $form->getData();
-        $email = $formData['email'];
-        $password = $formData['mdp'];
-    
-        // Vérification dans la base de données
-        $entityManager = $this->getDoctrine()->getManager();
-        $user = $entityManager->getRepository(User::class)->findOneBy([
-            'email' => $email,
-            'mdp' => $password,
-            'isApproved' => true, // Check if the user is approved
-            'isBlocked' => false, // Check if the user is not blocked
-        ]);
-        
-        if ($user !== null) {
-            // Récupérer le rôle de l'utilisateur
-            $role = $user->getRole(); // Supposons que la méthode getRole existe dans l'entité User
-            
-            // Debugging: Dump the role to see if it matches
-            dump($role);
-            
-            // Enregistrer les informations de l'utilisateur dans la session
-            $session->set('user_id', $user->getId());
-            $session->set('role', $role);
-            
-            // Debugging: Dump the session data
-            dump($session->all());
-            
-            // Rediriger l'utilisateur en fonction de son rôle
-            if ($role === 'Admin') {
-                // Redirection vers userListAction du UserController si les identifiants sont corrects
-                return $this->redirectToRoute('adminDashboard');
-            } else {
-                // Redirection vers User_Update s'il y a une correspondance dans la base de données
-                return $this->redirectToRoute('UserDashboard', ['id' => $user->getId()]);
-            }
-        }
-    }
-    
-    // Affichage du formulaire de connexion
-    return $this->render('user/login.html.twig', [
-        'form' => $form->createView(),
-    ]);
-}
-
-*/
-
     
     #[Route('/LoginRedirect', name: 'loredirect')]
     public function goLogin(): Response // Correct the return type declaration

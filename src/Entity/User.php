@@ -13,17 +13,15 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Entity
  */
 
-class User 
+class User implements UserInterface
 {
 
    /**
-     * @var int
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     */
-    private $id;
+ * @ORM\Id
+ * @ORM\GeneratedValue(strategy="AUTO")
+ * @ORM\Column(type="integer")
+ */
+private $id;
     
 
     /**
@@ -85,14 +83,19 @@ class User
     
     private $image;
 
-     /**
-     * @var string
-     *
-     * @ORM\Column(name="role", type="string", length=255, nullable=false)
-     * @Assert\NotBlank (message="remplir votre role")
-     * @Assert\Length(max=255)
+ 
+/**
+     * @ORM\Column(type="json")
      */
-    private $role;
+    private array $roles = [];
+
+
+
+
+
+
+    
+
 
 
     public function getId(): ?int
@@ -117,7 +120,7 @@ class User
         return $this->nom;
     }
 
-    public function setNom(string $nom): static
+    public function setNom(string $nom): self
     {
         $this->nom = $nom;
 
@@ -129,7 +132,7 @@ class User
         return $this->prenom;
     }
 
-    public function setPrenom(string $prenom): static
+    public function setPrenom(string $prenom): self
     {
         $this->prenom = $prenom;
 
@@ -141,7 +144,7 @@ class User
         return $this->email;
     }
 
-    public function setEmail(string $email): static
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 
@@ -153,32 +156,21 @@ class User
         return $this->mdp;
     }
 
-    public function setMdp(string $mdp): static
+    public function setMdp(string $mdp): self
     {
         $this->mdp = $mdp;
 
         return $this;
     }
-    public function getRole(): ?string
-    {
-        return $this->role;
-    }
+    
 
-    public function setRole(string $role): static
-    {
-        $this->role = $role;
-
-        return $this;
-    }
-
-   
 
     public function getImage(): ?string
     {
         return $this->image;
     }
 
-    public function setImage(string $image): static
+    public function setImage(string $image): self
     {
         $this->image = $image;
 
@@ -187,28 +179,49 @@ class User
 
 
 
-    public function getUsername(): ?string
-    {
-        return $this->email;
-    }
-
-    public function getPassword(): ?string
-    {
-        return $this->mdp;
-    }
-
-
-
-  
     
 
 
+  
+    public function getRole(): ?string
+    {
+        return $this->Role;
+    }
 
- // Methods required by UserInterface
+    public function setRole(string $Role): self
+    {
+        $this->Role = $Role;
 
- 
+        return $this;
+    }
 
 
+    public function __toString()
+    {
+        return $this->id;
+    }
+
+
+
+
+
+    
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        return $this->roles;
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    
 
   /**
      * Returning a salt is only needed, if you are not using a modern
@@ -229,6 +242,18 @@ class User
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+
+    public function getUsername(): ?string
+    {
+        return $this->email;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->mdp;
+    }
+
+
 
 
 }

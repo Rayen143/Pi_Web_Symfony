@@ -83,6 +83,39 @@ class UserRepository extends ServiceEntityRepository
 
 
     // End For Stat
+// Dans UserRepository.php
 
 
+
+    public function countUsersByRole(string $role): int
+    {
+        return $this->createQueryBuilder('u')
+            ->select('COUNT(u.id)')
+            ->where('u.roles LIKE :role')
+            ->setParameter('role', '%"'.$role.'"%')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    // Dans UserRepository.php
+
+
+
+
+    public function countUsersCreatedLastWeek(): int
+    {
+        $lastWeekDate = new \DateTime('-1 week');
+        
+        return $this->createQueryBuilder('u')
+            ->select('COUNT(u)')
+            ->where('u.createdAt >= :lastWeekDate')
+            ->setParameter('lastWeekDate', $lastWeekDate)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }
+
+
+
+
+

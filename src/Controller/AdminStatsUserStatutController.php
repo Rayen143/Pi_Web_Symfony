@@ -1,7 +1,10 @@
 <?php
 
+
+// Dans AdminStatsUserStatutController.php
+
 namespace App\Controller;
-use Twilio\Rest\Client;
+
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,13 +17,14 @@ class AdminStatsUserStatutController extends AbstractController
     {
         // Récupérer le nombre total d'utilisateurs
         $totalUsers = $userRepository->countAllUsers();
-
+        
         
 
         // Passer les données au template pour affichage
-        return $this->render('admin_stats_user_statut/stats.html.twig', [
+        return $this->render('/user/stat.html.twig', [
             'totalUsers' => $totalUsers,
             
         ]);
     }
 }
+

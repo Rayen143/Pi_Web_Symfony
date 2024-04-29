@@ -33,6 +33,17 @@ class HomeController extends AbstractController
             'user' => $user,
         ]);
     }
+    #[Route('/user/artisteDashboard/{id}', name: 'artisteDashboard')]
+    public function artisteDashboard(UserRepository $userRepository, $id): Response
+    {
+        // Retrieve the user entity based on $id
+        $user = $userRepository->find($id);
+
+        // Render the template, passing the user entity
+        return $this->render('base.html.twig', [
+            'user' => $user,
+        ]);
+    }
     
 
 
